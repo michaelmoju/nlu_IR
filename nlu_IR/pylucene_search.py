@@ -1,5 +1,5 @@
 from wiki_util import wiki_db_tool
-import config
+from . import config
 from sqlitedict import SqliteDict
 import json
 from tqdm import tqdm

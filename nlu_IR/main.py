@@ -19,15 +19,15 @@ def main():
                         help='Output log file')
     
     args = parser.parse_args()
-    
-    if myArg.log:
-        myFormat = '%(asctime)s ***%(levelname)s*** [%(name)s:%(lineno)s] - %(message)s'
-        logging.basicConfig(format=myFormat, datefmt = '%Y/%m/%d %H:%M:%S', handlers=[log_w(args.log)], level=str2llv(myArg.llv))
-        _log.log(100, ' '.join(sys.argv))
+
+    myLogFormat = '%(asctime)s ***%(levelname)s*** [%(name)s:%(lineno)s] - %(message)s'
+    logging.basicConfig(format=myLogFormat, datefmt='%Y/%m/%d %H:%M:%S', level=str2llv(args.llv))
+    if args.log:
+        logger.addHandler(log_w(args.log))
+        logger.log(100, ' '.join(sys.argv))
     else:
-        myFormat = '%(filename)s(%(lineno)d): %(message)s'
-        logging.basicConfig(level=str2llv(myArg.llv), format=myFormat)
-        _log.log(100, ' '.join(sys.argv))
+        logger.log(100, ' '.join(sys.argv))
+        
 
 if __name__ == '__main__':
     main()

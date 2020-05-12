@@ -1,1 +1,4 @@
 sqlitedict
+PrettyTable
+jsonlines
+tqdm

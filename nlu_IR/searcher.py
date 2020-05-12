@@ -1,9 +1,9 @@
 import logging
 
-
 logger = logging.getLogger(__name__)
 
-Searcher:
+
+class Searcher:
     def __init__(self):
         #init database and search engine
         logger.info('*** Initialize Searcher ***')

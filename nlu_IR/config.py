@@ -7,16 +7,20 @@ PROJ_ROOT = SRC_ROOT.parent
 DATA_ROOT = PROJ_ROOT / "data"
 RESULT_PATH = PROJ_ROOT / "results"
 PREDICTION_PATH = PROJ_ROOT / "prediction"
+DATABASE_ROOT = PROJ_ROOT / "database"
 
-FGC_DEV = DATA_ROOT / "FGC" / "FGC_release_1.7.13" / "FGC_release_all_dev.json"
-FGC_TRAIN = DATA_ROOT / "FGC" / "FGC_release_1.7.13" / "FGC_release_all_train.json"
-FGC_TEST = DATA_ROOT / "FGC" / "FGC_release_1.7.13" / "FGC_release_all_test.json"
+HOTPOT_TRAIN = DATA_ROOT / "hotpotqa" / "hotpot_train_v1.1.json"
+HOTPOT_DEV = DATA_ROOT / "hotpotqa" / "hotpot_dev_fullwiki_v1.json"
+HOTPOT_TEST = DATA_ROOT / "hotpotqa" / "hotpot_test_fullwiki_v1.json"
 
-HOTPOT_DEV = DATA_ROOT / "hotpot_dataset" / "FGC_hotpot_dev_distractor_v1(cn_refn).json"
-HOTPOT_TRAIN = DATA_ROOT / "hotpot_dataset" / "FGC_hotpot_train_v1.1(cn).json"
+# Whole: 5_486_211
+# ABS: 5_233_329
+HOTPOT_WIKI_ABS = DATA_ROOT / "hotpotqa" / "enwiki-20171001-pages-meta-current-withlinks-abstracts"
+HOTPOT_WIKI_PRC = DATA_ROOT / "hotpotqa" / "enwiki-20171001-pages-meta-current-withlinks-processed"
 
-TRAINED_MODELS = RESULT_PATH / "trainedmodels" 
-# TRAINED_MODEL_PATH = TRAINED_MODELS / ""
-# BERT_EMBEDDING = DATA_ROOT / "bert_chinese_total"
+#
+HOTPOT_WIKI_DB = DATABASE_ROOT / "hotpot_wiki.db"
+
+TRAINED_MODELS = RESULT_PATH / "trainedmodels"
 BERT_EMBEDDING = "bert-base-chinese"
 BERT_EMBEDDING_ZH = "bert-base-chinese"

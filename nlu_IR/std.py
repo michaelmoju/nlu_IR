@@ -8,8 +8,8 @@ class Bunch(dict):
 	def __init__(self, *args, **kwds):
 		super().__init__(*args, **kwds)
 		self.__dict__ = self
-        
-        
+
+
 def lprint(*args, **kwargs):
 	import inspect
 	callerFrame = inspect.stack()[1]  # 0 represents this line
@@ -17,7 +17,12 @@ def lprint(*args, **kwargs):
 	myFilename = os.path.basename(myInfo.filename)
 	print('{}({}):'.format(myFilename, myInfo.lineno), *args, flush=True, file=sys.stderr, **kwargs)
 
-    
+
+def log_debug(debug_msg, logger):
+	if logger.isEnabledFor(logging.DEBUG):
+		logger.debug(debug_msg)
+
+
 def prompt(*args, **kwargs):
 	print(*args, flush=True, **kwargs)
 
@@ -29,13 +34,14 @@ def new_dir(dir_path, clear=True):
 	if not os.path.exists(dir_path):
 		prompt('Create ' + dir_path)
 		os.makedirs(dir_path)
-        
+
 
 def insist(expr, mesg=''):
 	if not expr:
 		if mesg: print(mesg)
 		assert False
-        
+
+
 def log_w(filename, force=True):
 	if not force:
 		insist(not os.path.exists(filename), '{} exists!'.format(filename))
@@ -43,8 +49,8 @@ def log_w(filename, force=True):
 	if myDir and not os.path.exists(myDir):
 		os.makedirs(myDir)
 	return logging.FileHandler(filename, 'w', 'utf-8')
-        
-        
+
+
 def str2llv(s):
 	# Level		Numeric value
 	# CRITICAL  50
@@ -53,15 +59,15 @@ def str2llv(s):
 	# INFO		20
 	# DEBUG		10
 	# NOTSET	 0
-    if isinstance(s, str):
-        s = s.upper()
-    if s == 'FATAL': return logging.FATAL
-    if s == 'ERROR': return logging.ERROR
-    if s == 'WARN': return logging.WARN
-    if s == 'INFO': return logging.INFO
-    if s == 'DEBUG': return logging.DEBUG
-    if s == 'NOTSET': return logging.NOTSET
-    try:
-        return int(s)
-    except ValueError:
-        insist(False, 'Not able to convert "{}" to an integer!'.format(s))
+	if isinstance(s, str):
+		s = s.upper()
+	if s == 'FATAL': return logging.FATAL
+	if s == 'ERROR': return logging.ERROR
+	if s == 'WARN': return logging.WARN
+	if s == 'INFO': return logging.INFO
+	if s == 'DEBUG': return logging.DEBUG
+	if s == 'NOTSET': return logging.NOTSET
+	try:
+		return int(s)
+	except ValueError:
+		insist(False, 'Not able to convert "{}" to an integer!'.format(s))
