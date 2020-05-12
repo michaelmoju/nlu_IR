@@ -15,7 +15,8 @@ HOTPOT_TEST = DATA_ROOT / "hotpotqa" / "hotpot_test_fullwiki_v1.json"
 
 # Whole: 5_486_211
 # ABS: 5_233_329
-HOTPOT_WIKI_ABS = DATA_ROOT / "hotpotqa" / "enwiki-20171001-pages-meta-current-withlinks-abstracts"
+HOTPOT_WIKI_DB = DATABASE_ROOT / "hotpotWiki.db"
+HOTPOT_WIKI_ABS = DATA_ROOT / "hotpotqa" / "enwiki-20171001-pages-meta-current-withlinks-abstracts-test"
 HOTPOT_WIKI_PRC = DATA_ROOT / "hotpotqa" / "enwiki-20171001-pages-meta-current-withlinks-processed"
 
 #

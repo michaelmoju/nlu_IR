@@ -1,5 +1,6 @@
 import bz2
 import json
+import sqlite3
 from tqdm import tqdm
 from ..std import *
 from .. import config
@@ -15,7 +16,7 @@ def build_db(wiki_dir, save_path, num_workers=None):
 		raise RuntimeError('%s already exists!' % save_path)
 	
 	wiki_files = [f for f in wiki_dir.glob("*/wiki_*.bz2")]
-	logger.info("read %d wikifiles." % len(wiki_files))
+	logger.info("Read %d wikifiles." % len(wiki_files))
 	
 	doc_num = 0
 	for wiki_file in tqdm(wiki_files):
@@ -23,6 +24,10 @@ def build_db(wiki_dir, save_path, num_workers=None):
 		doc_num += len(extracted_docs)
 	
 	logger.info("Read %d documents." % doc_num)
+    
+    conn = sqlite3.connect(config.HOTPOT_WIKI_DB)
+    c = conn.cursor()
+    c.execute("CREATE TABLE documents (id PRIMARY KEY, url text, text text, linked_title text, original_title text);")
 
 def process_wiki_bz2(bz2_fp):
 	""" Process enwiki-20171001-pages-meta-current-withlinks-abstracts
@@ -39,13 +44,12 @@ def process_wiki_bz2(bz2_fp):
 			nrm_title = NFD_normalize(org_title)
 			if org_title != nrm_title:
 				log_debug("org_title:{}, nrm_title:{}".format(org_title, nrm_title), logger)
-			hyper_links = get_hyperlinks(article['text_with_links'])
-			extracted_docs.append({'id': article['id'],
-			                       'url': article['url'],
-			                       'title': nrm_title,
-			                       'org_title': org_title,
-			                       'plain_text': plain_text,
-			                       'hyper_links': hyper_links})
+                
+			text_with_links = "\t".join(article['text_with_links'])
+			hyper_links = get_hyperlinks(text_with_links)
+            hyper_link_titles = [ret[0] for ret in get_hyperlinks(text_with_links)]
+            
+            extracted_docs.append((article['id'], article['url'], plain_text, hyper_links_text, org_title))
 	return extracted_docs
 			
 			
