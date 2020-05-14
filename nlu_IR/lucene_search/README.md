@@ -3,7 +3,7 @@ Searcher for multiple corpora and projects in NLU_lab
 
 Searchers:  
 - <a href="#1-cosqa-searcher"> 1. CosQA searcher </a> 
-- <a href="#2-ssqa-searcherr"> 2. SSQA searcher </a>>
+- <a href="#2-ssqa-searcher"> 2. SSQA searcher </a>
 - 3\. HotpotQA searcher
 
 ## 1. CosQA searcher
