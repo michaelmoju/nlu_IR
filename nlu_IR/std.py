@@ -30,10 +30,10 @@ def prompt(*args, **kwargs):
 
 def new_dir(dir_path, clear=True):
     if os.path.exists(dir_path) and clear:
-        prompt('Remove ' + dir_path)
+        prompt('Remove ' + str(dir_path))
         shutil.rmtree(dir_path)
     if not os.path.exists(dir_path):
-        prompt('Create ' + dir_path)
+        prompt('Create ' + str(dir_path))
         os.makedirs(dir_path)
 
 

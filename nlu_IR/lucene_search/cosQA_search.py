@@ -3,6 +3,7 @@ from tqdm import tqdm
 from .. import config
 from ..std import *
 import logging
+
 logger = logging.getLogger(__name__)
 
 import lucene
@@ -89,7 +90,7 @@ class CosQAIndexer:
 			raise ValueError('lang should be "zh" or "en", {} is invalid!'.format(lang))
 		writerConfig = IndexWriterConfig(analyzer)
 		writerConfig.setSimilarity(mySimilarity())
-		logger.info('writer similarity func: {}'.format(self.writerConfig.getSimilarity()))
+		logger.debug('writer similarity func: {}'.format(writerConfig.getSimilarity()))
 		writer = IndexWriter(indexDir, writerConfig)
 		self.writer = writer
 	
@@ -116,12 +117,12 @@ class CosQASearcher:
 			analyzer = EnglishAnalyzer()
 		else:
 			raise ValueError('lang should be "zh" or "en", {} is invalid!'.format(lang))
-
+		
 		self.reader = DirectoryReader.open(indexDir)
 		self.searcher = IndexSearcher(self.reader)
 		self.searcher.setSimilarity(mySimilarity())
 		self.analyzer = analyzer
-		logger.info('search similarity func: {}'.format(self.searcher.getSimilarity()))
+		logger.debug('search similarity func: {}'.format(self.searcher.getSimilarity()))
 	
 	def search(self, query_text, top_n=1):
 		query_text = query_text.strip()
@@ -150,36 +151,53 @@ def index_all(doc_path):
 		title_en = doc['title']['en']
 		assert title_en
 		url = doc['ref']['en']['url']
-		did = DID_URL_RGX.findall(doc['ref']['en']['wikidata_url'])
+	
+		if not doc['ref']['en']['wikidata_url']:
+			return None
+		
+		did = DID_URL_RGX.findall(doc['ref']['en']['wikidata_url'])[0]
 		
 		content_en = doc['summary']['en']
 		content_zh = doc['summary']['zh']
+		
+		if not content_en:
+			return None
+		if not content_zh:
+			return None
 		
 		return did, title_en, url, content_en, content_zh
 	
 	raw_fps = list_fps(doc_path, 'json')
 	logger.info("Read {} files".format(len(raw_fps)))
 	
-	assert os.path.exists(config.IDX_COS_EN), "{} already exists!".format(config.IDX_COS_EN)
-	assert os.path.exists(config.IDX_COS_ZH), "{} already exists!".format(config.IDX_COS_ZH)
+	# 	assert not os.path.exists(config.IDX_COS_EN), "{} already exists!".format(config.IDX_COS_EN)
+	# 	assert not os.path.exists(config.IDX_COS_ZH), "{} already exists!".format(config.IDX_COS_ZH)
+	
 	new_dir(config.IDX_COS_EN)
 	new_dir(config.IDX_COS_ZH)
 	myIndexer_en = CosQAIndexer("en")
 	myIndexer_zh = CosQAIndexer("zh")
+	
+	try:
+		doc_num = 0
+		logger.info("Start indexing...")
+		for fp in tqdm(raw_fps):
+			docs = json_load(fp)
+			for doc in docs:
+				if not get_content(doc):
+					continue
+				else:
+					did, title_en, url, content_en, content_zh = get_content(doc)
+				myIndexer_en.add(did, title_en, content_en)
+				myIndexer_zh.add(did, title_en, content_zh)
+				doc_num += 1
+		logger.info("Indexed {} docs.".format(doc_num))
+		myIndexer_en.close()
+		myIndexer_zh.close()
 
-	doc_num = 0
-	logger.info("Start indexing...")
-	for fp in tqdm(raw_fps):
-		docs = json_load(fp)
-		doc_num += len(docs)
-		for doc in docs:
-			did, title_en, url, content_en, content_zh = get_content(doc)
-			myIndexer_en.add(did, title_en, content_en)
-			myIndexer_zh.add(did, title_en, content_zh)
-	logger.info("Indexed {} docs.".format(doc_num))
-	myIndexer_en.close()
-	myIndexer_zh.close()
-
+	finally:
+		myIndexer_en.close()
+		myIndexer_zh.close()
 
 if __name__ == '__main__':
 	main()
