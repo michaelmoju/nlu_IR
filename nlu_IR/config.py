@@ -9,9 +9,20 @@ RESULT_PATH = PROJ_ROOT / "results"
 PREDICTION_PATH = PROJ_ROOT / "prediction"
 DATABASE_ROOT = PROJ_ROOT / "database"
 
+# Datasets
 HOTPOT_TRAIN = DATA_ROOT / "hotpotqa" / "hotpot_train_v1.1.json"
 HOTPOT_DEV = DATA_ROOT / "hotpotqa" / "hotpot_dev_fullwiki_v1.json"
 HOTPOT_TEST = DATA_ROOT / "hotpotqa" / "hotpot_test_fullwiki_v1.json"
+
+COS_TRAIN = DATA_ROOT / "cosQA" / "movieqa_1.0" / "movieqa_train.json"
+COS_DEV = DATA_ROOT / "cosQA" / "movieqa_1.0" / "movieqa_dev.json"
+COS_TEST = DATA_ROOT / "cosQA" / "movieqa_1.0" / "movieqa_test.json"
+
+COS_WIKI = DATA_ROOT / "cosQA" / "doc"
+
+#Index directory
+IDX_COS_ZH = DATABASE_ROOT / "IDX_cosZH"
+IDX_COS_EN = DATABASE_ROOT / "IDX_cosEN"
 
 # Whole: 5_486_211
 # ABS: 5_233_329
