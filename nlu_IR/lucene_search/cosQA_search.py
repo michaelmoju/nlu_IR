@@ -58,13 +58,13 @@ def test_search():
 	# query to be search
 	test_query = 'what movies did Temuera Morrison act in?'
 	
-	# initialize search, 'en' for English and 'zh' for Chinese
+	# instantiate a searcher, 'en' for English and 'zh' for Chinese
 	mysearcher = CosQASearcher('en')
 	
 	"""
-	search by calling search(query, top_n)
-	return: A list of (did, title_en, content, score)
-	e.g. ()
+	search by calling searcher.search(query, top_n)
+	return:
+	A list of (did, title_en, content, score)
 	"""
 	
 	ret_docs = mysearcher.search(query_text=test_query, top_n=1)

@@ -2,8 +2,8 @@
 Searcher for multiple corpora and projects in NLU_lab
 
 Searchers:  
-- <a href="1-CosQA searcher"> 1. CosQA searcher </a> 
-- 2\. SSQA searcher
+- <a href="#1-cosqa-searcher"> 1. CosQA searcher </a> 
+- <a href="#2-ssqa-searcherr"> 2. SSQA searcher </a>>
 - 3\. HotpotQA searcher
 
 ## 1. CosQA searcher
@@ -28,3 +28,5 @@ The output should be:
 ```
 
 To directly use the searcher API, please refer to the `test_search` function in [cosQA_search.py](cosQA_search.py)
+
+## 2. SSQA searcher
