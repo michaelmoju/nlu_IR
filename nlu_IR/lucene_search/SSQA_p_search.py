@@ -56,7 +56,7 @@ def test_search():
 	# Specify a lesson and instantiate a searcher
 	Lid = 'PubB-G6a-0302'
 	test_db_fp = config.DATABASE_ROOT / "test_SSQA_db" / "test.db"
-	mySearcher = ParagSearcher(Lid, db_path=test_db_fp)
+	mySearcher = ParagSearcher(Lid)
 	
 	"""
 	search by calling searcher.search(query, top_n)

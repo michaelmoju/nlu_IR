@@ -134,7 +134,7 @@ def build_all(xml_dir):
 	
 class SSQA_DB:
 	def __init__(self, db_path=config.DB_SSQA):
-		self.conn = sqlite3.connect(db_path)
+		self.conn = sqlite3.connect(str(db_path))
 	
 	def __enter__(self):
 		return self
