@@ -64,19 +64,25 @@ def _qst2dat(qsts):
 			q_dict['true-false'][qid] = (q_text, a)
 		
 		elif qtype == 'multiple-choice':
-			q_text = q[0].text  # question
-			choices = [c.text for c in q[1]]  # choice set
-			a = int(q[2].attrib['idx']) - 1  # answer idx
-			assert qid not in q_dict['multiple-choice'], "duplicate qid"
-			q_dict['multiple-choice'][qid] = (q_text, choices, a)
-		
+			if len(q) == 3:
+				q_text = q[0].text  # question
+				choices = [c.text for c in q[1]]  # choice set
+				# lprint(qid)
+				a = int(q[2].attrib['idx']) - 1  # answer idx
+				assert qid not in q_dict['multiple-choice'], "duplicate qid"
+				q_dict['multiple-choice'][qid] = (q_text, choices, a)
+	
+			# TODO: See Train/PubC-G6b-0202 (IIS-MR-SOCIAL-GRADE06-001713)
+			else:
+				continue
+	
 		elif qtype == 'multiple-select':
 			q_text = q[0].text  # question
 			choices = [c.text for c in q[1]]  # choice set
 			a = [int(a.attrib['idx']) - 1 for a in q[2]]  # answer idx list
 			assert qid not in q_dict['multiple-select'], "duplicate qid"
 			q_dict['multiple-select'][qid] = (q_text, choices, a)
-	
+
 	return q_dict
 
 
@@ -118,7 +124,7 @@ def xml2st(fp, clean_title=True):
 		if clean_title:
 			if ('UnitTitle' in iTag) or ('Title' in iTag):
 				continue
-				
+		
 		Util.check_unescaped_text(iTxt)
 		assert iTxt.find('&') < 0
 		myTxt = Util.xml_escape(iTxt)
@@ -147,9 +153,10 @@ def xml2st(fp, clean_title=True):
 	q_num = int(p[1].attrib['Num_Ques'])
 	
 	assert q_num == len(p[1]), 'question num incorrect'
+	# lprint(myFid)
 	q_dict = _qst2dat(p[1])
 	
-	myLessonTxt = myLessonTxt[:-3] # clean the last "|||"
+	myLessonTxt = myLessonTxt[:-3]  # clean the last "|||"
 	return myFid, out_parags, myLessonTxt, q_dict
 
 
@@ -159,8 +166,9 @@ def str_lesson2parags(lesson_str):
 	return parags
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
 	from .. import config
+	
 	test_fp = config.DS_SSQA / "Develop" / "PubB-G6a-0302.xml"
 	myFid, out_parags, myLessonTxt, q_dict = xml2st(test_fp)
 	clean_parags = str_lesson2parags(myLessonTxt)

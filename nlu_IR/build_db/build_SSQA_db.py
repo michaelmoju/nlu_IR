@@ -22,7 +22,7 @@ def main():
 	                    help='Command: {build_all} for building SSQA database. {test_build} for testing building db.'
 	                         '{test_db} for testing database.')
 	parser.add_argument('-xml_path',
-	                    default=config.COS_WIKI,
+	                    default=config.DS_SSQA,
 	                    help='/path/to/SSQA/Elementary_Social_Studies_v2.9')
 	
 	args = parser.parse_args()
@@ -56,7 +56,7 @@ def test_build():
 	test_dir = config.DATABASE_ROOT / "test_SSQA_db"
 	new_dir(test_dir, clear=True)
 	
-	conn = sqlite3.connect(test_dir / 'test.db')
+	conn = sqlite3.connect(str(test_dir / 'test.db'))
 	c = conn.cursor()
 	c.execute("CREATE TABLE lessons (Lid PRIMARY KEY, lesson_str text);")
 	
@@ -103,7 +103,7 @@ def build_all(xml_dir):
 	if os.path.isfile(config.DB_SSQA):
 		raise RuntimeError('The database already exists!')
 		
-	conn = sqlite3.connect(config.DB_SSQA)
+	conn = sqlite3.connect(str(config.DB_SSQA))
 	c = conn.cursor()
 	c.execute("CREATE TABLE lessons (Lid PRIMARY KEY, lesson_str text);")
 	
@@ -114,7 +114,7 @@ def build_all(xml_dir):
 		set_dir = str(xml_dir) + '/{}'.format(set)
 		
 		logger.info("Read {} set".format(set))
-		for fp in list_fps(set_dir, ext="xml"):
+		for fp in tqdm(list_fps(set_dir, ext="xml")):
 			Lid, _, lesson_str, _ = io_SSQA.xml2st(fp, clean_title=True)
 			assert Lid not in lessons, "{} duplicated!".format(Lid)
 			lessons[Lid] = lesson_str
