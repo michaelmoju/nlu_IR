@@ -13,6 +13,4 @@ Note that when editing the Makefile, please follow https://blog.csdn.net/DSbatig
 
 
 ## 2. ReadME Links:
-- [CosQA](nlu_IR/lucene_search)
-- SSQA searcher
-- HotpotQA searcher
+- [Lucene searchers](nlu_IR/lucene_search) (including CosQA, SSQA, HotpotQA)

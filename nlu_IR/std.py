@@ -19,6 +19,10 @@ def lprint(*args, **kwargs):
     print('{}({}):'.format(myFilename, myInfo.lineno), *args, flush=True, file=sys.stderr, **kwargs)
 
 
+def eprint(*args, **kwargs):
+    print(*args, flush=True, file=sys.stderr, **kwargs)
+
+
 def log_debug(debug_msg, logger):
     if logger.isEnabledFor(logging.DEBUG):
         logger.debug(debug_msg)

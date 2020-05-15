@@ -11,7 +11,7 @@ from java.nio.file import Paths
 from org.apache.lucene.analysis.cn.smart import SmartChineseAnalyzer
 from org.apache.lucene.analysis.en import EnglishAnalyzer
 from org.apache.lucene.store import SimpleFSDirectory
-from org.apache.lucene.index import IndexWriter, IndexWriterConfig, IndexReader, DirectoryReader
+from org.apache.lucene.index import IndexWriter, IndexWriterConfig, DirectoryReader
 from org.apache.lucene.document import Document, StringField, TextField, Field
 from org.apache.lucene.search import IndexSearcher
 from org.apache.lucene.search.similarities import ClassicSimilarity, BM25Similarity
@@ -52,6 +52,9 @@ def main():
 	
 	elif args.cmd == 'test_search':
 		test_search()
+		
+	else:
+		raise ValueError('Command {} not defined!'.format(args.cmd))
 
 
 def test_search():
@@ -59,19 +62,19 @@ def test_search():
 	test_query = 'what movies did Temuera Morrison act in?'
 	
 	# instantiate a searcher, 'en' for English and 'zh' for Chinese
-	mysearcher = CosQASearcher('en')
+	mySearcher = CosQASearcher('en')
 	
 	"""
 	search by calling searcher.search(query, top_n)
 	return:
-	A list of (did, title_en, content, score)
+	A list of tuple(did, title_en, content, score)
 	"""
 	
-	ret_docs = mysearcher.search(query_text=test_query, top_n=1)
+	ret_docs = mySearcher.search(query_text=test_query, top_n=1)
 	print(ret_docs)
 	
 	# remember to close the searcher
-	mysearcher.close()
+	mySearcher.close()
 
 
 class CosQAIndexer:
@@ -198,6 +201,7 @@ def index_all(doc_path):
 	finally:
 		myIndexer_en.close()
 		myIndexer_zh.close()
+
 
 if __name__ == '__main__':
 	main()

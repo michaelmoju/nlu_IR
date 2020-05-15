@@ -20,19 +20,21 @@ COS_TEST = DATA_ROOT / "cosQA" / "movieqa_1.0" / "movieqa_test.json"
 
 COS_WIKI = DATA_ROOT / "cosQA" / "doc"
 
-#Index directory
+DS_SSQA = DATA_ROOT / "SSQA" / "Elementary_Social_Studies_v2.9"
+
+# Index directory
 IDX_COS_ZH = DATABASE_ROOT / "IDX_cosZH"
 IDX_COS_EN = DATABASE_ROOT / "IDX_cosEN"
 
 # Whole: 5_486_211
 # ABS: 5_233_329
-HOTPOT_WIKI_DB = DATABASE_ROOT / "hotpotWiki.db"
 HOTPOT_WIKI_ABS = DATA_ROOT / "hotpotqa" / "enwiki-20171001-pages-meta-current-withlinks-abstracts-test"
 HOTPOT_WIKI_PRC = DATA_ROOT / "hotpotqa" / "enwiki-20171001-pages-meta-current-withlinks-processed"
 
-#
-HOTPOT_WIKI_DB = DATABASE_ROOT / "hotpot_wiki.db"
+# Databases
+DB_HOTPOT_WIKI = DATABASE_ROOT / "hotpot_wiki.db"
+DB_SSQA = DATABASE_ROOT / "ssqa.db"
 
-TRAINED_MODELS = RESULT_PATH / "trainedmodels"
-BERT_EMBEDDING = "bert-base-chinese"
-BERT_EMBEDDING_ZH = "bert-base-chinese"
+# TRAINED_MODELS = RESULT_PATH / "trainedmodels"
+# BERT_EMBEDDING = "bert-base-chinese"
+# BERT_EMBEDDING_ZH = "bert-base-chinese"

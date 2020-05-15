@@ -41,7 +41,7 @@ def build_db(wiki_dir, save_path, num_workers=None):
 	wiki_files = [f for f in wiki_dir.glob("*/wiki_*.bz2")]
 	logger.info("Read %d wikifiles." % len(wiki_files))
 	
-	conn = sqlite3.connect(config.HOTPOT_WIKI_DB)
+	conn = sqlite3.connect(config.DB_HOTPOT_WIKI)
 	c = conn.cursor()
 	c.execute("CREATE TABLE documents (id PRIMARY KEY, url text, text text, hyper_link_titles text, org_title text);")
 	
@@ -70,7 +70,7 @@ def main():
 	                    default=config.HOTPOT_WIKI_ABS,
 	                    help='/path/to/wiki_files')
 	parser.add_argument('-save_path',
-	                    default=config.HOTPOT_WIKI_DB,
+	                    default=config.DB_HOTPOT_WIKI,
 	                    help='/path/to/save/db.db')
 	parser.add_argument('-num_workers',
 	                    default=None,
