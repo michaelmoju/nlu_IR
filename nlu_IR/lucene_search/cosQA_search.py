@@ -129,8 +129,8 @@ class CosQASearcher:
 
     def search(self, query_text, top_n=1):
         query_text = query_text.strip()
-        # query = QueryParser("content", self.analyzer).parse(QueryParser.escape(query_text.strip()))
-        query = QueryParser("content", self.analyzer).parse(query_text)
+        query = QueryParser("content", self.analyzer).parse(QueryParser.escape(query_text.strip()))
+#         query = QueryParser("content", self.analyzer).parse(query_text)
         scoreDocs = self.searcher.search(query, top_n).scoreDocs
 
         out_list = []
