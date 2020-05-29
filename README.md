@@ -13,9 +13,11 @@ Please follow https://docs.datastax.com/en/jdk-install/doc/jdk-install/installOp
 install open-jdk-8
 
 ### Install Pyluene
-Please follow https://lucene.apache.org/pylucene/install.html to install pylucene.  
-Note that when editing the Makefile, please follow https://blog.csdn.net/DSbatigol/article/details/14448151 for adding the Chinese analyzer.
-
+1. Please follow https://lucene.apache.org/pylucene/install.html to install pylucene.  
+2. Note that when editing the Makefile, please follow https://blog.csdn.net/DSbatigol/article/details/14448151 for adding the Chinese analyzer.  
+In the Makfile:
+- Uncomment `#JARS+=$(SMARTCN_JAR)            # smart chinese analyzer` 
+- add the line `--exclude org.apache.lucene.analysis.cn.smart.AnalyzerProfile` near `--exclude org.apache.lucene.sandbox.queries.regex.JakartaRegexpCapabilities`
 
 ## 2. ReadME Links:
 - [Lucene searchers](nlu_IR/lucene_search) (including CosQA, SSQA, HotpotQA)

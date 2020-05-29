@@ -49,6 +49,12 @@ def _body2dat(p, dat, xpath=''):
 
 
 def _qst2dat(qsts):
+	def is_label(choice_txt, label_dict):
+		for char in choice_txt:
+			if char not in label_dict:
+				return False
+		return True
+	
 	q_dict = {'true-false': {}, 'multiple-choice': {}, 'multiple-select': {}}
 	for q_i, q in enumerate(qsts):
 		assert q.tag == 'QA'
@@ -64,25 +70,40 @@ def _qst2dat(qsts):
 			q_dict['true-false'][qid] = (q_text, a)
 		
 		elif qtype == 'multiple-choice':
+			q_text = q[0].text  # question
+			choices = []
 			if len(q) == 3:
-				q_text = q[0].text  # question
-				choices = [c.text for c in q[1]]  # choice set
-				# lprint(qid)
+				for choice in q[1]:  # ChoiceSet
+					choice_id = choice.attrib['idx']
+					choice_txt = choice.text
+					choices.append(choice_id + ':' + choice_txt + '\n')
 				a = int(q[2].attrib['idx']) - 1  # answer idx
-				assert qid not in q_dict['multiple-choice'], "duplicate qid"
-				q_dict['multiple-choice'][qid] = (q_text, choices, a)
-	
-			# TODO: See Train/PubC-G6b-0202 (IIS-MR-SOCIAL-GRADE06-001713)
+			elif len(q) == 4:
+				label_dict = {}
+				for label in q[1]:  # ChoiceList
+					label_dict[label.attrib['label']] = label.text
+				for choice in q[2]:  # ChoiceSet
+					choice_id = choice.attrib['idx']
+					
+					# choice
+					if is_label(choice.text, label_dict):
+						choice_txt = '|'.join([label_dict[label] for label in choice.text])
+					else:
+						choice_txt = choice.text
+					choices.append(choice_id + ':' + choice_txt + '\n')
+				a = int(q[3].attrib['idx']) - 1  # answer idx
 			else:
-				continue
-	
+				logger.error("multiple-choice has more element!")
+			assert qid not in q_dict['multiple-choice'], "duplicate qid"
+			q_dict['multiple-choice'][qid] = (q_text, choices, a)
+		
 		elif qtype == 'multiple-select':
 			q_text = q[0].text  # question
 			choices = [c.text for c in q[1]]  # choice set
 			a = [int(a.attrib['idx']) - 1 for a in q[2]]  # answer idx list
 			assert qid not in q_dict['multiple-select'], "duplicate qid"
 			q_dict['multiple-select'][qid] = (q_text, choices, a)
-
+	
 	return q_dict
 
 
