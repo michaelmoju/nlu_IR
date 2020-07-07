@@ -26,7 +26,10 @@ def _update_sp(metrics, gold, pred):
         if g not in pred:
             fn += 1
     precision = 1.0 * tp / (tp + fp) if tp + fp > 0 else 0.0
-    recall = 1.0 * tp / (tp + fn) if tp + fn > 0 else 0.0
+    if len(gold) == 0:
+        recall = 1.0
+    else:
+        recall = 1.0 * tp / (tp + fn) if tp + fn > 0 else 0.0
     f1 = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0.0
     em = 1.0 if fp + fn == 0 else 0.0
     metrics['sp_em'] += em
