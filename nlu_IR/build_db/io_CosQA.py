@@ -21,6 +21,9 @@ def json2st(fp):
 		
 		url = doc['ref']['en']['url'] if not None else ""
 		
+		if not doc['ref']['en']['wikidata_url']:
+			continue
+		
 		did = DID_URL_RGX.findall(doc['ref']['en']['wikidata_url'])[0]
 		
 		content_en = doc['summary']['en'] if not None else ""

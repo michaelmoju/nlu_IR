@@ -80,12 +80,12 @@ def test_db():
 	# instantiate SSQA_DB
 	test_db_fp = config.DATABASE_ROOT / "test_SSQA_db" / "test.db"
 	myDB = CosQA_DB(test_db_fp)
-	qids = myDB.get_qids()
+	qids = myDB.get_dids()
 	lprint("qids: {}".format(qids))
 	
 	test_qid = qids[0]
-	lprint("{} lesson_str_en: {}".format(test_qid, myDB.get_lesson_str_en(test_qid)))
-	lprint("{} lesson_str_cn: {}".format(test_qid, myDB.get_lesson_str_cn(test_qid)))
+	lprint("{} lesson_str_en: {}".format(test_qid, myDB.get_content_zh(test_qid)))
+	lprint("{} lesson_str_cn: {}".format(test_qid, myDB.get_content_en(test_qid)))
 	
 	# close database
 	myDB.close()
