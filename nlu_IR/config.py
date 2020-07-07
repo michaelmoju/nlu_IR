@@ -14,9 +14,9 @@ HOTPOT_TRAIN = DATA_ROOT / "hotpotqa" / "hotpot_train_v1.1.json"
 HOTPOT_DEV = DATA_ROOT / "hotpotqa" / "hotpot_dev_fullwiki_v1.json"
 HOTPOT_TEST = DATA_ROOT / "hotpotqa" / "hotpot_test_fullwiki_v1.json"
 
-COS_TRAIN = DATA_ROOT / "cosQA" / "movieqa_1.0" / "movieqa_train.json"
-COS_DEV = DATA_ROOT / "cosQA" / "movieqa_1.0" / "movieqa_dev.json"
-COS_TEST = DATA_ROOT / "cosQA" / "movieqa_1.0" / "movieqa_test.json"
+COS_TRAIN = DATA_ROOT / "cosQA" / "movieqa_1.2" / "movieqa_train.json"
+COS_DEV = DATA_ROOT / "cosQA" / "movieqa_1.2" / "movieqa_dev.json"
+COS_TEST = DATA_ROOT / "cosQA" / "movieqa_1.2" / "movieqa_test.json"
 
 COS_WIKI = DATA_ROOT / "cosQA" / "doc"
 
