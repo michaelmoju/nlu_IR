@@ -34,6 +34,7 @@ HOTPOT_WIKI_PRC = DATA_ROOT / "hotpotqa" / "enwiki-20171001-pages-meta-current-w
 # Databases
 DB_HOTPOT_WIKI = DATABASE_ROOT / "hotpot_wiki.db"
 DB_SSQA = DATABASE_ROOT / "ssqa.db"
+DB_COSQA = DATA_ROOT / "cosqa.db"
 
 # TRAINED_MODELS = RESULT_PATH / "trainedmodels"
 # BERT_EMBEDDING = "bert-base-chinese"
