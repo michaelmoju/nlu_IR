@@ -101,7 +101,7 @@ def build_all(doc_dir):
 	if os.path.isfile(config.DB_COSQA):
 		raise RuntimeError('The database already exists!')
 	
-	conn = sqlite3.connect(str(config.DB_SSQA))
+	conn = sqlite3.connect(str(config.DB_COSQA))
 	c = conn.cursor()
 	c.execute("CREATE TABLE documents (did PRIMARY KEY, title_en text, title_zh text, "
 	          "url text, content_en text, content_zh text);")
