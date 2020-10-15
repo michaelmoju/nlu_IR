@@ -37,7 +37,7 @@ The searcher will search from that lesson and return some paragraphs and the sco
 The first thing you should do is building the database that stores all lessons.  
 In the project file, run:
 ```bash
-python -m nlu_IR.build_db.build_SSQA_db -cmd build_all -xml_path /path/to/SSQA/Elementary_Social_Studies_v2.9
+python -m nlu_IR.build_db.build_SSQA_db -cmd build_all -xml_path /path/to/SSQA/Elementary_Social_Studies_v4.0
 ```
 
 #### Test search
