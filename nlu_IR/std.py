@@ -33,6 +33,7 @@ def prompt(*args, **kwargs):
 
 
 def new_dir(dir_path, clear=True):
+    dir_path = str(dir_path)
     if os.path.exists(dir_path) and clear:
         prompt('Remove ' + str(dir_path))
         shutil.rmtree(dir_path)
